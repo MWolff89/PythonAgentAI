@@ -1,0 +1,2 @@
+- Automate deletion (or clearing) and recreation (or repopulation) of indices during rebuilding stage, taking csv data from Airtable.
+- 
