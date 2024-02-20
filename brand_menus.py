@@ -11,7 +11,7 @@ api_key = os.environ["PINECONE_API_KEY"]
 
 pc = Pinecone(api_key=api_key)
 
-pinecone_index = pc.Index("outlets-address-and-operating-hours")
+pinecone_index = pc.Index("brand-menus")
 
 print(pinecone_index)
 
@@ -20,4 +20,4 @@ vector_store = PineconeVectorStore(pinecone_index=pinecone_index)
 index = VectorStoreIndex.from_vector_store(vector_store=vector_store)
 retriever = VectorIndexRetriever(index=index, similarity_top_k=5)
 
-outlets_address_and_operating_hours_engine = RetrieverQueryEngine(retriever=retriever)
+brand_menus_engine = RetrieverQueryEngine(retriever=retriever)

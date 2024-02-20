@@ -2,18 +2,21 @@ from general_enquries import general_enquiries_engine
 from halal_status import population_query_engine
 from outlets_address_and_operating_hours import outlets_address_and_operating_hours_engine
 from website_and_social_links_vector_query import brands_website_and_social_links_engine
-
+# from note_engine import note_engine
+from contact_back_engine import contact_back_note_engine
+from brand_outlets import brand_outlets_query_engine
+from brand_menus import brand_menus_engine
 
 from llama_index.tools import QueryEngineTool, ToolMetadata
 
 
 tools = [
-    # note_engine,
+    # contact_back_note_engine,
     QueryEngineTool(
         query_engine=outlets_address_and_operating_hours_engine,
         metadata=ToolMetadata(
             name="outlets_address_and_operating_hours_data",
-            description="this gives information about outlet address and operating hours. the brand name and/or location is a MUST as an input."
+            description="this gives information about outlet address and operating hours. the brand name and/or location is a MUST as an input. The location CANNOT be a region. It must be part of a specific street address or a building name. Do not use this tool if the user's request contains a region such as north, northeast, south, west, east. This tool MUST NOT be used when a user is requesting for ALL outlets of a brand."
         ),
     ),
     QueryEngineTool(
@@ -22,6 +25,13 @@ tools = [
             name="brands_website_and_social_links",
             description="this gives information about the brands website, facebook, instagram and twitter. this is strictly only for brands  links and not for any other links.",
         ),
+    ),
+    QueryEngineTool(
+        query_engine=brand_menus_engine,
+        metadata=ToolMetadata(
+            name="brand_menus",
+            description="this gives information about brand menus. the input MUST be a brand and/or a food and/or pricing."
+        )
     ),
     QueryEngineTool(
         query_engine=general_enquiries_engine,
@@ -35,6 +45,13 @@ tools = [
         metadata=ToolMetadata(
             name="halal_status",
             description="this helps answer questions on which brand(s) are fully halal, not halal or only selected stores within the brand are halal. the input should consist of either a brand name or a choice of [FULLY HALAL, NOT HALAL, SELECTED STORES] OR BOTH. If the user is asking for which brands are halal then we should filter by all that are != NOT HALAL"
+        )
+    ),
+    QueryEngineTool(
+        query_engine=brand_outlets_query_engine,
+        metadata=ToolMetadata(
+            name="brand_outlets",
+            description="this helps answer questions on brand outlets. the input should consist of either a brand name or part of an address. This tool should be used if the user is asking for nearest outlets to a region, in which case simply return all outlets from the brand. this tool should also be used when a user is requesting for ALL outlets of a brand."
         )
     ),
 
