@@ -1,5 +1,5 @@
 from general_enquries import general_enquiries_engine
-from halal_status import population_query_engine
+from halal_status import halal_query_engine
 from outlets_address_and_operating_hours import outlets_address_and_operating_hours_engine
 from website_and_social_links_vector_query import brands_website_and_social_links_engine
 # from note_engine import note_engine
@@ -41,10 +41,10 @@ tools = [
         )
     ),
      QueryEngineTool(
-        query_engine=population_query_engine,
+        query_engine=halal_query_engine,
         metadata=ToolMetadata(
             name="halal_status",
-            description="this helps answer questions on which brand(s) are fully halal, not halal or only selected stores within the brand are halal. the input should consist of either a brand name or a choice of [FULLY HALAL, NOT HALAL, SELECTED STORES] OR BOTH. If the user is asking for which brands are halal then we should filter by all that are != NOT HALAL"
+            description="this helps answer questions on which brand(s) halal. the input should consist of either a brand name or a choice of [FULLY HALAL, NOT HALAL, SELECTED STORES] OR BOTH. If the user has not provided a brand but instead is asking in general for which brands are halal then we should filter by all that are != NOT HALAL OR filter by FULLY HALAL OR SELECTED STORES. If the user has provided a brand then we should filter by that brand and return the halal status of that brand."
         )
     ),
     QueryEngineTool(
