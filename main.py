@@ -15,12 +15,12 @@ agent = ReActAgent.from_tools(tools, llm=llm, verbose=True, context=system_promp
 # )
 
 # While input is not q, keep asking for input and print the response
-while True:
-    user_input = input("Ask me something: ")
-    if user_input == "q":
-        break
-    result = agent.chat(user_input)
-    print(result)
+# while True:
+#     user_input = input("Ask me something: ")
+#     if user_input == "q":
+#         break
+#     result = agent.chat(user_input)
+#     print(result)
 
 class Query(BaseModel):
     text: str
