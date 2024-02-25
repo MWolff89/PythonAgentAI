@@ -41,13 +41,13 @@ app.add_event_handler("shutdown", shutdown_event)
 #     result = agent.chat(inpute)
 #     print(result)
 
-thread_id = "xxx"
-if thread_id not in tesa_memory_buffers:
-    tesa_memory_buffers[thread_id] = ChatMemoryBuffer(
-        token_limit=128000, max_tokens=128000, max_turns=20
-    )
+# thread_id = "xxx"
+# if thread_id not in tesa_memory_buffers:
+#     tesa_memory_buffers[thread_id] = ChatMemoryBuffer(
+#         token_limit=128000, max_tokens=128000, max_turns=20
+#     )
 
-user_memory = tesa_memory_buffers[thread_id]
+# user_memory = tesa_memory_buffers[thread_id]
 
 # while True:
 #     inpute = input("Enter your query: ")
@@ -55,22 +55,22 @@ user_memory = tesa_memory_buffers[thread_id]
 #     result = agent.chat(inpute)
 #     print(result)
 
-@app.post("/query")
-async def query(query: Query):
-    if query.thread_id not in user_memory_buffers:
-        user_memory_buffers[query.thread_id] = ChatMemoryBuffer(token_limit=1000, max_tokens=1000, max_turns=10)
+# @app.post("/query")
+# async def query(query: Query):
+#     if query.thread_id not in user_memory_buffers:
+#         user_memory_buffers[query.thread_id] = ChatMemoryBuffer(token_limit=1000, max_tokens=1000, max_turns=10)
     
-    user_memory = user_memory_buffers[query.thread_id]
-    agent = ReActAgent.from_tools(tools, llm=llm, verbose=True, context=base_context, memory=user_memory)
+#     user_memory = user_memory_buffers[query.thread_id]
+#     agent = ReActAgent.from_tools(tools, llm=llm, verbose=True, context=base_context, memory=user_memory)
     
-    result = agent.chat(query.text)
-    print(f"Thread: {query.thread_id}, Query: {query.text}, Result: {result}")
+#     result = agent.chat(query.text)
+#     print(f"Thread: {query.thread_id}, Query: {query.text}, Result: {result}")
     
-    return {
-        "response": result
-    }
+#     return {
+#         "response": result
+#     }
 
-@app.post("/tesa-query")
+@app.post("/query")
 async def tesa_query(query: Query):
     if query.thread_id not in tesa_memory_buffers:
         tesa_memory_buffers[query.thread_id] = ChatMemoryBuffer(
