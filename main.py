@@ -78,7 +78,7 @@ async def tesa_query(query: Query):
         )
     
     user_memory = tesa_memory_buffers[query.thread_id]
-    agent = OpenAIAgent.from_tools(tesa_tools, llm=llm, verbose=True, context=tesa_system_prompt, memory=user_memory)
+    agent = OpenAIAgent.from_tools(tesa_tools, llm=llm, verbose=True, system_prompt=tesa_system_prompt, memory=user_memory)
     
     result = agent.chat(query.text)
     print(f"Thread: {query.thread_id}, Query: {query.text}, Result: {result}")
