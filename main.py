@@ -73,10 +73,12 @@ async def query(query: Query):
 @app.post("/tesa-query")
 async def tesa_query(query: Query):
     if query.thread_id not in tesa_memory_buffers:
-        tesa_memory_buffers[query.thread_id] = ChatMemoryBuffer(token_limit=1000, max_tokens=1000, max_turns=10)
+        tesa_memory_buffers[query.thread_id] = ChatMemoryBuffer(
+            token_limit=128000, max_tokens=128000, max_turns=20
+        )
     
     user_memory = tesa_memory_buffers[query.thread_id]
-    agent = ReActAgent.from_tools(tools, llm=llm, verbose=True, context=tesa_system_prompt, memory=user_memory)
+    agent = OpenAIAgent.from_tools(tesa_tools, llm=llm, verbose=True, context=tesa_system_prompt, memory=user_memory)
     
     result = agent.chat(query.text)
     print(f"Thread: {query.thread_id}, Query: {query.text}, Result: {result}")
