@@ -49,11 +49,11 @@ if thread_id not in tesa_memory_buffers:
 
 user_memory = tesa_memory_buffers[thread_id]
 
-while True:
-    inpute = input("Enter your query: ")
-    agent = OpenAIAgent.from_tools(tesa_tools, llm=llm, verbose=True, system_prompt=tesa_system_prompt, memory=user_memory)
-    result = agent.chat(inpute)
-    print(result)
+# while True:
+#     inpute = input("Enter your query: ")
+#     agent = OpenAIAgent.from_tools(tesa_tools, llm=llm, verbose=True, system_prompt=tesa_system_prompt, memory=user_memory)
+#     result = agent.chat(inpute)
+#     print(result)
 
 @app.post("/query")
 async def query(query: Query):
