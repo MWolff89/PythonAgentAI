@@ -7,6 +7,7 @@ from contact_back_engine import contact_back_note_engine
 from brand_outlets import brand_outlets_query_engine
 from brand_menus import brand_menus_engine
 from brand_dine_in import brand_dine_in_query_engine
+from brand_serves_noodles import brand_serves_noodles_query_engine
 from llama_index.tools import QueryEngineTool, ToolMetadata
 
 
@@ -59,6 +60,13 @@ tools = [
             metadata=ToolMetadata(
                 name="brand_dine_in",
                 description="this helps answer questions on the brand outlets which offer dine in. the input should consist of optionally a brand name. This tool should be used if the user is asking for which brands or outlets of a brand offer dine in. this tool should also be used when a user is requesting for ALL brands that offer dine in. If the user is asking for which brands offer dine in then return all results before using the results to infer the brands which offer dine in."
+            )
+        ),
+    QueryEngineTool(
+            query_engine=brand_serves_noodles_query_engine,
+            metadata=ToolMetadata(
+                name="brand_serves_noodles",
+                description="this helps answer questions on the brand outlets which serves noodles. the input should consist of optionally a brand name. This tool should be used if the user is asking for which brands or outlets of a brand serves noodles. this tool should also be used when a user is requesting for ALL brands that serves noodles. If the user is asking for which brands serves noodles then return all results before using the results to infer the brands which serves noodles."
             )
         ),
 ]

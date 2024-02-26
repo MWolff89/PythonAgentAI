@@ -338,3 +338,50 @@ brand_dine_in_prompt = PromptTemplate(
 
     Expression: """
 )
+
+brand_serves_noodles_prompt = PromptTemplate(
+    """\
+    You are working with a pandas dataframe in Python.
+    The name of the dataframe is `df`.
+    This is the result of `print(df.head())`:
+        Location Name                               Concatenated Address   Brand Name Serves Noodles
+    0     111 Somerset  111 Somerset, 111 Somerset Road, #01-48, Singa...  Nam Kee Pau        checked
+    1   Ang Mo Kio Hub  Ang Mo Kio Hub, 53 Ang Mo Kio Avenue 3, #B2-41...  Nam Kee Pau        checked
+    2  Buangkok Square  Buangkok Square, 991 Buangkok Link, #01-03, Si...  Nam Kee Pau        checked
+    3   Canberra Plaza  Canberra Plaza, 133 Canberra View, #01-24, Sin...  Nam Kee Pau        checked
+    4      Centrepoint  Centrepoint, 176 Orchard Road, #B2-03/06, Sing...  Nam Kee Pau        checked
+
+    Follow these instructions:
+    {instruction_str}
+    Query: {query_str}
+
+    ***IMPORTANT*** 
+    The following are brand names:
+
+    Taiwan Night Markets
+    Man Ji
+    Kawan Kawan
+    Boleh Boleh!
+    Encik Tan
+    Let’s Eat!
+    Malaysia Boleh!
+    Malaysia Chiak!
+    Tangs Market
+    85 Redhill
+    EAT
+    Hong Kong Egglet
+    Nam Kee Pau
+    PAO PAO
+    GREAT. FOOD
+    Ding Ji
+    Sedap Noodle
+    Sabai Sabai Thai Private Kitchen
+    Sedap by Encik Tan
+    Ci Yuan Hawker Centre
+    SG Hawker
+    Popeyes
+    
+    If the user is asking for which brands serve noodles then return all results before using the results to infer the brands which offer dine in.
+
+    Expression: """
+)
