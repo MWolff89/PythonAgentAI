@@ -385,3 +385,50 @@ brand_serves_noodles_prompt = PromptTemplate(
 
     Expression: """
 )
+
+brand_claypot_prompt = PromptTemplate(
+    """\
+    You are working with a pandas dataframe in Python.
+    The name of the dataframe is `df`.
+    This is the result of `print(df.head())`:
+            Location Name                               Concatenated Address Brand Name Has Claypot Section
+    0        Bedok Mall  Bedok Mall, 311 New Upper Changi Road, #B1-41/...  Encik Tan             checked
+    1       Compass One  Compass One, 1 Sengkang Square, #02-29, Singap...  Encik Tan             checked
+    2     Downtown East  Downtown East, 1 Pasir Ris Close, E!Avenue, #0...  Encik Tan             checked
+    3     Marina Square  Marina Square, 6 Raffles Blvd, #B2-275/276, Si...  Encik Tan             checked
+    4  Our Tampines Hub  Our Tampines Hub, 1 Tampines Walk, #01-12, Sin...  Encik Tan             checked
+
+    Follow these instructions:
+    {instruction_str}
+    Query: {query_str}
+
+    ***IMPORTANT*** 
+    The following are brand names:
+
+    Taiwan Night Markets
+    Man Ji
+    Kawan Kawan
+    Boleh Boleh!
+    Encik Tan
+    Let’s Eat!
+    Malaysia Boleh!
+    Malaysia Chiak!
+    Tangs Market
+    85 Redhill
+    EAT
+    Hong Kong Egglet
+    Nam Kee Pau
+    PAO PAO
+    GREAT. FOOD
+    Ding Ji
+    Sedap Noodle
+    Sabai Sabai Thai Private Kitchen
+    Sedap by Encik Tan
+    Ci Yuan Hawker Centre
+    SG Hawker
+    Popeyes
+    
+    If the user is asking for which brands has claypot then return all results before using the results to infer the brands which offer dine in.
+
+    Expression: """
+)

@@ -8,6 +8,7 @@ from brand_outlets import brand_outlets_query_engine
 from brand_menus import brand_menus_engine
 from brand_dine_in import brand_dine_in_query_engine
 from brand_serves_noodles import brand_serves_noodles_query_engine
+from brand_claypot_section import brand_claypot_query_engine
 from llama_index.tools import QueryEngineTool, ToolMetadata
 
 
@@ -59,14 +60,21 @@ tools = [
             query_engine=brand_dine_in_query_engine,
             metadata=ToolMetadata(
                 name="brand_dine_in",
-                description="this helps answer questions on the brand outlets which offer dine in. the input should consist of optionally a brand name. This tool should be used if the user is asking for which brands or outlets of a brand offer dine in. this tool should also be used when a user is requesting for ALL brands that offer dine in. If the user is asking for which brands offer dine in then return all results before using the results to infer the brands which offer dine in."
+                description="this helps answer questions on the brand outlets which offer dine in. the input should consist of optionally a brand name. This tool should be used if the user is asking for which brands or outlets of a brand offer dine in. this tool should also be used when a user is requesting for ALL brands that offer dine in. If the user is asking for which brands offer dine in then return all results before using the results to infer the brands which offer dine in. use df[df['Dine In'] == 'checked']['Brand Name'].unique() when the user is asking for which brands offer dine in. use df[df['Dine In'] == 'checked'] when the user is asking for which outlets offer dine in."
             )
         ),
     QueryEngineTool(
             query_engine=brand_serves_noodles_query_engine,
             metadata=ToolMetadata(
                 name="brand_serves_noodles",
-                description="this helps answer questions on the brand outlets which serves noodles. the input should consist of optionally a brand name. This tool should be used if the user is asking for which brands or outlets of a brand serves noodles. this tool should also be used when a user is requesting for ALL brands that serves noodles. If the user is asking for which brands serves noodles then return all results before using the results to infer the brands which serves noodles."
+                description="this helps answer questions on the brand outlets which serves noodles. the input should consist of optionally a brand name. This tool should be used if the user is asking for which brands or outlets of a brand serves noodles. this tool should also be used when a user is requesting for ALL brands that serves noodles. If the user is asking for which brands serves noodles then return all results before using the results to infer the brands which serves noodles. use df[df['Serves Noodles'] == 'checked']['Brand Name'].unique() when the user is asking for which brands serves noodles. use df[df['Serves Noodles'] == 'checked'] when the user is asking for which outlets serves noodles."
             )
+        ),
+    QueryEngineTool(
+        query_engine=brand_claypot_query_engine,
+        metadata=ToolMetadata(
+            name="brand_claypot_section",
+            description="this helps answer questions on the brand outlets which has a claypot section. the input should consist of optionally a brand name. This tool should be used if the user is asking for which brands or outlets of a brand has claypot section. this tool should also be used when a user is requesting for ALL brands that has a claypot section. If the user is asking for which brands has a claypot section then return all results before using the results to infer the brands which serves noodles. use df[df['Claypot Section'] == 'checked']['Brand Name'].unique() when the user is asking for which brands has a claypot section. use df[df['Claypot Section'] == 'checked'] when the user is asking for which outlets has claypot section."
+        )
         ),
 ]
