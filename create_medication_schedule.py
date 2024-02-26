@@ -1,35 +1,50 @@
-from google.oauth2.credentials import Credentials
-from google_auth_oauthlib.flow import InstalledAppFlow
-from google.auth.transport.requests import Request
-from googleapiclient.discovery import build
-import os.path
-import pickle
+import gspread
+from llama_index.tools import FunctionTool
+from oauth2client.service_account import ServiceAccountCredentials
 
-# If modifying these scopes, delete the file token.pickle.
-SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
+def upload_to_google_sheets():
+    # Define the scope and credentials
+    scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
+    credentials = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
 
-creds = None
-# The file token.pickle stores the user's access and refresh tokens, and is
-# created automatically when the authorization flow completes for the first time.
-if os.path.exists('token.pickle'):
-    with open('token.pickle', 'rb') as token:
-        creds = pickle.load(token)
-# If there are no (valid) credentials available, let the user log in.
-if not creds or not creds.valid:
-    if creds and creds.expired and creds.refresh_token:
-        creds.refresh(Request())
-    else:
-        flow = InstalledAppFlow.from_client_secrets_file(
-            'credentials.json', SCOPES)
-        creds = flow.run_local_server(port=0)
-    # Save the credentials for the next run
-    with open('token.pickle', 'wb') as token:
-        pickle.dump(creds, token)
+    # Authorize the client
+    client = gspread.authorize(credentials)
 
-service = build('sheets', 'v4', credentials=creds)
+    # Open the desired spreadsheet by its title
+    spreadsheet = client.open('medication_schedule')
 
-# Call the Sheets API to create a new sheet
-spreadsheet = {'properties': {'title': 'Your New Sheet'}}
-spreadsheet = service.spreadsheets().create(body=spreadsheet,
-                                            fields='spreadsheetId').execute()
-print('Spreadsheet ID: {0}'.format(spreadsheet.get('spreadsheetId')))
+    # Select the worksheet where you want to upload the CSV data
+    worksheet = spreadsheet.get_worksheet(0)  # Index 0 represents the first worksheet
+
+    # Read the CSV file and upload its contents to the worksheet
+    with open('data/medication_schedule.csv', 'r') as file:
+        csv_data = file.read()
+        client.import_csv(spreadsheet.id, data=csv_data)
+
+    print("CSV file uploaded successfully to Google Sheets.")
+    
+    
+upload_to_google_sheets_engine = FunctionTool.from_defaults(
+    fn=upload_to_google_sheets,
+    name="upload_to_google_sheets",
+    description="This tool uploads the medication schedule CSV file to Google Sheets. The file is uploaded to the first worksheet of the 'medication_schedule' spreadsheet."
+)
+# Define the scope and credentials
+# scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
+# credentials = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+
+# # Authorize the client
+# client = gspread.authorize(credentials)
+
+# # Open the desired spreadsheet by its title
+# spreadsheet = client.open('medication_schedule')
+
+# # Select the worksheet where you want to upload the CSV data
+# worksheet = spreadsheet.get_worksheet(0)  # Index 0 represents the first worksheet
+
+# # Read the CSV file and upload its contents to the worksheet
+# with open('data/medication_schedule.csv', 'r') as file:
+#     csv_data = file.read()
+#     client.import_csv(spreadsheet.id, data=csv_data)
+
+# print("CSV file uploaded successfully to Google Sheets.")
