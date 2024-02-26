@@ -6,7 +6,7 @@ from website_and_social_links_vector_query import brands_website_and_social_link
 from contact_back_engine import contact_back_note_engine
 from brand_outlets import brand_outlets_query_engine
 from brand_menus import brand_menus_engine
-
+from brand_dine_in import brand_dine_in_query_engine
 from llama_index.tools import QueryEngineTool, ToolMetadata
 
 
@@ -30,7 +30,7 @@ tools = [
         query_engine=brand_menus_engine,
         metadata=ToolMetadata(
             name="brand_menus",
-            description="this gives information about brand menus. the input MUST be a brand and/or a food and/or pricing."
+            description="this gives information about brand menus. the input MUST be a brand and/or a food and/or pricing or a food concept such as DINE IN / TAKEAWAY / DELIVERY."
         )
     ),
     QueryEngineTool(
@@ -54,5 +54,11 @@ tools = [
             description="this helps answer questions on brand outlets. the input should consist of either a brand name or part of an address. This tool should be used if the user is asking for nearest outlets to a region, in which case simply return all outlets from the brand. this tool should also be used when a user is requesting for ALL outlets of a brand."
         )
     ),
-
+    QueryEngineTool(
+            query_engine=brand_dine_in_query_engine,
+            metadata=ToolMetadata(
+                name="brand_dine_in",
+                description="this helps answer questions on the brand outlets which offer dine in. the input should consist of optionally a brand name. This tool should be used if the user is asking for which brands or outlets of a brand offer dine in. this tool should also be used when a user is requesting for ALL brands that offer dine in. If the user is asking for which brands offer dine in then return all results before using the results to infer the brands which offer dine in."
+            )
+        ),
 ]

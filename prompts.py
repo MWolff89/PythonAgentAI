@@ -159,6 +159,8 @@ and finally their feedback and let them know that we will get back to them withi
 
 **IMPORTANT** You should apologize if it is a complaint and assure the customer. If it is a feedback, you should thank the customer.
 
+if the user is asking for which brands offer dine in, you should use the brand_dine_in tool with an empty input to return all results before using the results to infer the brands which offer dine in.
+
 """
 
 brand_outlets_prompt = PromptTemplate(
@@ -289,3 +291,50 @@ Tobradex	1
 Hypertonic Saline	4
 EDTA	1
 """
+
+brand_dine_in_prompt = PromptTemplate(
+    """\
+    You are working with a pandas dataframe in Python.
+    The name of the dataframe is `df`.
+    This is the result of `print(df.head())`:
+                Location Name                               Concatenated Address   Brand Name  Dine-in
+    0            111 Somerset  111 Somerset, 111 Somerset Road, #01-48, Singa...  Nam Kee Pau  checked
+    1          Ang Mo Kio Hub  Ang Mo Kio Hub, 53 Ang Mo Kio Avenue 3, #B2-41...  Nam Kee Pau  checked
+    2              Bedok Mall  Bedok Mall, 311 New Upper Changi Rd, #B2-K25, ...  Nam Kee Pau      NaN
+    3  Buangkok Hawker Centre  Buangkok Hawker Centre, 70 Compassvale Bow, #0...  Nam Kee Pau      NaN
+    4         Buangkok Square  Buangkok Square, 991 Buangkok Link, #01-03, Si...  Nam Kee Pau  checked
+
+    Follow these instructions:
+    {instruction_str}
+    Query: {query_str}
+
+    ***IMPORTANT*** 
+    The following are brand names:
+
+    Taiwan Night Markets
+    Man Ji
+    Kawan Kawan
+    Boleh Boleh!
+    Encik Tan
+    Let’s Eat!
+    Malaysia Boleh!
+    Malaysia Chiak!
+    Tangs Market
+    85 Redhill
+    EAT
+    Hong Kong Egglet
+    Nam Kee Pau
+    PAO PAO
+    GREAT. FOOD
+    Ding Ji
+    Sedap Noodle
+    Sabai Sabai Thai Private Kitchen
+    Sedap by Encik Tan
+    Ci Yuan Hawker Centre
+    SG Hawker
+    Popeyes
+    
+    If the user is asking for which brands offer dine in then return all results before using the results to infer the brands which offer dine in.
+
+    Expression: """
+)
