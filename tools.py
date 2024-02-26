@@ -16,7 +16,7 @@ tools = [
         query_engine=outlets_address_and_operating_hours_engine,
         metadata=ToolMetadata(
             name="outlets_address_and_operating_hours_data",
-            description="this gives information about outlet address and operating hours. the brand name and/or location is a MUST as an input. The location CANNOT be a region. It must be part of a specific street address or a building name. Do not use this tool if the user's request contains a region such as north, northeast, south, west, east. This tool MUST NOT be used when a user is requesting for ALL outlets of a brand."
+            description="this gives information about outlet address and operating hours. the brand name and/or location is a MUST as an input. The location CANNOT be a region. It must be part of a specific street address or a building name. Do not use this tool if the user's request contains a region such as north, northeast, south, west, east. This tool MUST NOT be used when a user is requesting for ALL outlets of a brand. you should instead use the brand_outlets tool to retrieve all outlets of a brand."
         ),
     ),
     QueryEngineTool(
