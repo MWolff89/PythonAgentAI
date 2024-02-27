@@ -55,3 +55,4 @@ pinecone-client==3.0.3
 flask==3.0.2
 fastapi==0.109.2
 pydantic==2.6.1
+gspread==6.0.2
