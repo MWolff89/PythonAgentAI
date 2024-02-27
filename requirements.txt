@@ -56,3 +56,4 @@ flask==3.0.2
 fastapi==0.109.2
 pydantic==2.6.1
 gspread==6.0.2
+oauth2client==4.1.3
