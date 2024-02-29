@@ -16,7 +16,6 @@ def upload_to_google_sheets():
         client = gspread.authorize(credentials)
 
         print("Client authorized successfully.")
-        # print the client
         print(client)
 
         # Open the desired spreadsheet by its title
@@ -34,18 +33,15 @@ def upload_to_google_sheets():
             print("CSV file read and processed successfully.")
 
         # Upload the data to the worksheet
-        worksheet.update('A1', csv_data)
-
+        response = worksheet.update('A1', csv_data)
         print("CSV file uploaded successfully to Google Sheets.")
+        print(response)  # This will print the actual response from the update operation
 
-    except gspread.exceptions.GSpreadException as e:
-        print(f"An error occurred: {e}")
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
 
 # Remember to call your function to execute it
 # upload_to_google_sheets()
-
 
 
 
